@@ -13,7 +13,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-class COWCGANDataset(Dataset):
+class COWCGANFrcnnDataset(Dataset):
   def __init__(self, data_dir_gt, data_dir_lq, image_height=256, image_width=256, transform = None):
     self.data_dir_gt = data_dir_gt
     self.data_dir_lq = data_dir_lq
@@ -28,9 +28,10 @@ class COWCGANDataset(Dataset):
 
   def __getitem__(self, idx):
     #get the paths
-    img_path_gt = os.path.join(self.data_dir_gt, self.imgs_gt[idx])
-    img_path_lq = os.path.join(self.data_dir_lq, self.imgs_lq[idx])
-    annotation_path = os.path.join(self.data_dir_lq, self.annotation[idx])
+    img_path_gt = os.path.join("", self.imgs_gt[idx])
+    img_path_lq = os.path.join("", self.imgs_lq[idx])
+    annotation_path = os.path.join("", self.annotation[idx])
+    print(str(img_path_gt))
     img_gt = cv2.imread(img_path_gt,1) #read color image height*width*channel=3
     img_lq = cv2.imread(img_path_lq,1) #read color image height*width*channel=3
     img_gt = cv2.cvtColor(img_gt, cv2.COLOR_BGR2RGB)
@@ -57,8 +58,10 @@ class COWCGANDataset(Dataset):
                 target['bboxes'] = boxes
                 target['labels'] = labels
                 target['label_car_type'] = label_car_type
-                target['idx'] = idx
+                target['image_id'] = idx
                 target['LQ_path'] = img_path_lq
+                target["area"] = 0
+                target["iscrowd"] = 0
                 break
             else:
                 #get coordinates withing height width range
@@ -77,6 +80,9 @@ class COWCGANDataset(Dataset):
 
     if obj_class != 0:
         labels = np.ones(len(boxes)) # all are cars
+        boxes_for_calc = torch.as_tensor(boxes, dtype=torch.int64)
+        area = (boxes_for_calc[:, 3] - boxes_for_calc[:, 1]) * (boxes_for_calc[:, 2] - boxes_for_calc[:, 0])
+        iscrowd = torch.zeros((len(boxes),), dtype=torch.int64)
         #create dictionary to access the values
         target = {}
         target['object'] = 1
@@ -85,19 +91,21 @@ class COWCGANDataset(Dataset):
         target['bboxes'] = boxes
         target['labels'] = labels
         target['label_car_type'] = label_car_type
-        target['idx'] = idx
+        target['image_id'] = idx
         target['LQ_path'] = img_path_lq
+        target["area"] = area
+        target["iscrowd"] = iscrowd
 
     if self.transform is None:
         #convert to tensor
-        target = self.convert_to_tensor(**target)
-        return target
+        image, target = self.convert_to_tensor(**target)
+        return image, target
         #transform
     else:
         transformed = self.transform(**target)
         #print(transformed['image'], transformed['bboxes'], transformed['labels'], transformed['idx'])
-        target = self.convert_to_tensor(**transformed)
-        return target
+        image, target = self.convert_to_tensor(**transformed)
+        return image, target
 
   def __len__(self):
     return len(self.imgs_lq)
@@ -107,9 +115,24 @@ class COWCGANDataset(Dataset):
       target['object'] = torch.tensor(target['object'], dtype=torch.int64)
       target['image_lq'] = torch.from_numpy(target['image_lq'].transpose((2, 0, 1)))
       target['image'] = torch.from_numpy(target['image'].transpose((2, 0, 1)))
-      target['bboxes'] = torch.as_tensor(target['bboxes'], dtype=torch.int64)
-      target['labels'] = torch.ones(len(target['bboxes']), dtype=torch.int64)
-      target['label_car_type'] = torch.as_tensor(target['label_car_type'], dtype=torch.int64)
-      target['image_id'] = torch.tensor([target['idx']])
+      target['boxes'] = torch.tensor(target['bboxes'], dtype=torch.float32)
+      target['labels'] = torch.ones(len(target['labels']), dtype=torch.int64)
+      target['label_car_type'] = torch.tensor(target['label_car_type'], dtype=torch.int64)
+      target['image_id'] = torch.tensor([target['image_id']])
+      target["area"] = torch.tensor(target['area'])
+      target["iscrowd"] = torch.tensor(target['iscrowd'])
 
-      return target
+      image = {}
+      image['object'] = target['object']
+      image['image_lq'] = target['image_lq']
+      image['image'] = target['image']
+      image['image'] = target['image']
+      image['LQ_path'] = target['LQ_path']
+
+      del target['object']
+      del target['image_lq']
+      del target['image']
+      del target['bboxes']
+      del target['LQ_path']
+
+      return image, target
