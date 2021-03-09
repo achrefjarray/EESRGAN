@@ -24,9 +24,9 @@
     "data_loader": {
         "type": "COWCGANFrcnnDataLoader",
         "args":{
-            "data_dir_GT": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/HR/x4/",
-            "data_dir_LQ": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/",
-            "batch_size": 4,
+            "data_dir_GT": "./dataset/HR/x4/",
+            "data_dir_LQ": "./dataset/LR/x4/",
+            "batch_size": 2,
             "shuffle": true,
             "validation_split": 0.0,
             "num_workers": 2
@@ -74,7 +74,7 @@
         "D_update_ratio": 1,
         "D_init_iters": 0,
         "manual_seed": 10,
-        "val_freq": 10,
+        "val_freq": 1000,
 
         "save_dir": "saved/",
         "save_period": 1,
@@ -86,28 +86,33 @@
         "tensorboard": true
     },
     "path": {
-        "models": "saved/pretrained_models_EESRGAN_FRCNN_Backpropagated_with_Edge_net",
-        "FRCNN_model": "saved/FRCNN_model_Bic",
-        "pretrain_model_G": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/pretrained_models_EESRGAN_FRCNN_Backpropagated/153000_G.pth",
-        "pretrain_model_D": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/pretrained_models_EESRGAN_FRCNN_Backpropagated/153000_D.pth",
-        "pretrain_model_FRCNN": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/pretrained_models_EESRGAN_FRCNN_Backpropagated/153000_FRCNN.pth",
+        "models": "saved",
+        "FRCNN_model": "./saved/",
+        "pretrain_model_G": "./dataset/170000_G.pth",
+        "pretrain_model_D": "./dataset//170000_D.pth",
+        "pretrain_model_FRCNN": "./dataset//170000_FRCNN.pth",
+        "pretrain_model_FRCNN_LR_LR": "./saved/0_FRCNN_LR_LR.pth",
         "training_state": "saved/training_state",
         "strict_load": true,
         "resume_state": "~",
-        "val_images": "saved/val_images",
-        "log": "saved/logs",
-        "data_dir_Valid": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/HR/x4/valid_img/",
-        "data_dir_F_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/final_SR_images_216000/",
-        "data_dir_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/SR_images/",
+        "val_images": "./saved",
+        "output_images": "./saved",
+        "log": "./saved",
+        "data_dir_Valid": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/valid_img/",
+        "data_dir_F_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/Final_SR_images_test/",
+        "data_dir_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/SR_images_test/",
         "data_dir_SR_combined": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/combined_SR_images_216000/",
         "data_dir_E_SR_1": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/enhanced_SR_images_1/",
         "data_dir_E_SR_2": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/enhanced_SR_images_2/",
         "data_dir_E_SR_3": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/enhanced_SR_images_3/",
-        "data_dir_Bic": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/Bic/x4/valid_img/",
-        "data_dir_Bic_train": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/Bic/x4/"
+        "data_dir_Bic": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/HR/x4/valid_img/",
+        "data_dir_LR_train": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/",
+        "data_dir_Bic_valid": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/Bic/x4/valid_img/",
+        "Test_Result_LR_LR_COWC": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/Test_Result_LR_LR_COWC/",
+        "Test_Result_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/Test_Result_SR/"
     },
     "logger": {
-      "print_freq": 10,
-      "save_checkpoint_freq": 10
+      "print_freq": 100,
+      "save_checkpoint_freq": 1000
     }
 }
