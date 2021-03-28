@@ -124,9 +124,9 @@ class ESRGAN_EESN_Model(BaseModel):
     Might change my code if problem happens
     '''
     def feed_data(self, data):
-        self.var_L = data['image_lq'].to(self.device)
-        self.var_H = data['image'].to(self.device)
-        input_ref = data['ref'] if 'ref' in data else data['image']
+        self.var_L = data[0]['image_lq'].to(self.device)
+        self.var_H = data[0]['image'].to(self.device)
+        input_ref = data[0]['ref'] if 'ref' in data else data[0]['image']
         self.var_ref = input_ref.to(self.device)
 
     def optimize_parameters(self, step):
