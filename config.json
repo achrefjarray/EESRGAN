@@ -1,6 +1,6 @@
 {
     "name": "ImagePatchClassifier_TinyNet",
-    "n_gpu": 1,
+    "n_gpu": 0,
 
     "arch": {
         "type": "ImagePatchClassifier",
