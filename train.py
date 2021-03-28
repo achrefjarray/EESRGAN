@@ -39,8 +39,8 @@ def main(config):
     # setup data_loader instances
     data_loader = config.init_obj('data_loader', module_data)
     #change later this valid_data_loader using init_obj
-    valid_data_loader = module_data.COWCGANFrcnnDataLoader('/kaggle/working/EESRGAN/dataset/HR/',
-    '/kaggle/working/EESRGAN/dataset/HR/', 1, training = False)
+    valid_data_loader = module_data.COWCGANFrcnnDataLoader('/kaggle/working/EESRGAN/dataset/valid_imglr/',
+    '/kaggle/working/EESRGAN/dataset/valid_imghr/', 1, training = False)
 
     # build model architecture, then print to console
     #model = config.init_obj('arch', module_arch)
