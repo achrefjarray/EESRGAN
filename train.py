@@ -39,8 +39,8 @@ def main(config):
     # setup data_loader instances
     data_loader = config.init_obj('data_loader', module_data)
     #change later this valid_data_loader using init_obj
-    valid_data_loader = module_data.COWCGANFrcnnDataLoader('/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/HR/x4/valid_img/',
-    '/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/valid_img/', 1, training = False)
+    valid_data_loader = module_data.COWCGANFrcnnDataLoader('/kaggle/working/EESRGAN/dataset/HR/',
+    '/kaggle/working/EESRGAN/dataset/HR/', 1, training = False)
 
     # build model architecture, then print to console
     #model = config.init_obj('arch', module_arch)
@@ -62,14 +62,15 @@ def main(config):
                       valid_data_loader=valid_data_loader,
                       lr_scheduler=lr_scheduler)
     '''
-    '''
+    
     trainer = COWCGANTrainer(config=config,data_loader=data_loader,
                      valid_data_loader=valid_data_loader
                      )
-    '''
     
+    '''
     trainer = COWCGANFrcnnTrainer(config=config, data_loader=data_loader,
                      valid_data_loader=valid_data_loader)
+    '''
     trainer.train()
 
     '''
