@@ -24,8 +24,8 @@
     "data_loader": {
         "type": "COWCGANFrcnnDataLoader",
         "args":{
-            "data_dir_GT": "./dataset/HR/x4/",
-            "data_dir_LQ": "./dataset/LR/x4/",
+            "data_dir_GT": "/kaggle/working/EESRGAN/dataset/HR/x4/",
+            "data_dir_LQ": "/kaggle/working/EESRGAN/dataset/LR/x4/",
             "batch_size": 2,
             "shuffle": true,
             "validation_split": 0.0,
@@ -88,9 +88,9 @@
     "path": {
         "models": "saved",
         "FRCNN_model": "./saved/",
-        "pretrain_model_G": "./dataset/170000_G.pth",
-        "pretrain_model_D": "./dataset//170000_D.pth",
-        "pretrain_model_FRCNN": "./dataset//170000_FRCNN.pth",
+        "pretrain_model_G": "/kaggle/input/eesrgan-model-data/eesrganmdels+dataset/models/170000_G.pth",
+        "pretrain_model_D": "/kaggle/input/eesrgan-model-data/eesrganmdels+dataset/models/170000_D.pth",
+        "pretrain_model_FRCNN": "/kaggle/input/eesrgan-model-data/eesrganmdels+dataset/models/170000_FRCNN.pth",
         "pretrain_model_FRCNN_LR_LR": "./saved/0_FRCNN_LR_LR.pth",
         "training_state": "saved/training_state",
         "strict_load": true,
@@ -98,7 +98,7 @@
         "val_images": "./saved",
         "output_images": "./saved",
         "log": "./saved",
-        "data_dir_Valid": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/valid_img/",
+        "data_dir_Valid": "/kaggle/working/EESRGAN/dataset/HR/",
         "data_dir_F_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/Final_SR_images_test/",
         "data_dir_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/SR_images_test/",
         "data_dir_SR_combined": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/combined_SR_images_216000/",
@@ -109,7 +109,7 @@
         "data_dir_LR_train": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/",
         "data_dir_Bic_valid": "/home/jakaria/Super_Resolution/Datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/Bic/x4/valid_img/",
         "Test_Result_LR_LR_COWC": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/Test_Result_LR_LR_COWC/",
-        "Test_Result_SR": "/home/jakaria/Super_Resolution/Filter_Enhance_Detect/saved/Test_Result_SR/"
+        "Test_Result_SR": "/kaggle/working//EESRGAN/saved/"
     },
     "logger": {
       "print_freq": 100,
